@@ -6,7 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class Client {
-
+ // haaaaaaaaaaqaaaaaaaqaaaaaaaaaa
     public static final String SERVER_HOSTNAME = "localhost";
 
     DatagramSocket clientSocket;
