@@ -56,7 +56,7 @@ public class Server {
                     System.out.println("Client: " + receivedMessage);
 
                     //maybe get an input or our recipes
-                    String sendbackMessage = "Received your message";
+                    String sendbackMessage = "Received your message, meow";
                     byte[] sendbackBuffer = sendbackMessage.getBytes(StandardCharsets.UTF_8);
 
                     DatagramPacket sendbackPacket = new DatagramPacket(

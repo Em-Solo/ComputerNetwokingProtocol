@@ -39,7 +39,7 @@ public class Client {
             return;
         }
 
-        System.out.print("> ");
+        System.out.print("~> ");
 
         //buffer size subject to change
         byte[] receivingBuffer = new byte[256];
@@ -63,7 +63,19 @@ public class Client {
                                 6969
                         );
                         clientSocket.send(exitPacket);
+
+                        clientSocket.close();
+                        break;
                     }
+
+                    byte[] messageSendBuffer = message.getBytes(StandardCharsets.UTF_8);
+                    DatagramPacket sendPacket = new DatagramPacket(
+                            messageSendBuffer,
+                            messageSendBuffer.length,
+                            targetServerAddress,
+                            6969
+                    );
+                    clientSocket.send(sendPacket);
 
                     // Contrary to the TCP example, we attempt to receive the
                     // message from the server right after we've sent it.
