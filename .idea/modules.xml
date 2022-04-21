@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ComputerNetworkingProtcol.iml" filepath="$PROJECT_DIR$/ComputerNetworkingProtcol.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Prodocol/Prodocol.iml" filepath="$PROJECT_DIR$/Prodocol/Prodocol.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Protocol/Protocol.iml" filepath="$PROJECT_DIR$/Protocol/Protocol.iml" />
     </modules>
   </component>
 </project>
