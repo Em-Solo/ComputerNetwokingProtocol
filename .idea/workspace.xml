@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2292f57b-9324-450e-8b98-e0609041f4f9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Client.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/P2P.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="2292f57b-9324-450e-8b98-e0609041f4f9" name="Changes" comment="did client doing server">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Prodocol/Prodocol.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/Protocol.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Prodocol/src/protocol/Client.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Prodocol/src/protocol/P2P" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/protocol/P2P" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Prodocol/src/protocol/P2P2" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/protocol/P2P2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Prodocol/src/protocol/client.java" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/protocol/client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Prodocol/src/protocol/server.java" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/protocol/server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +46,14 @@
       <option name="presentableId" value="Default" />
       <updated>1649946371436</updated>
     </task>
+    <task id="LOCAL-00001" summary="did client doing server">
+      <created>1650566004806</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1650566004806</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -67,5 +66,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="did client doing server" />
+    <option name="LAST_COMMIT_MESSAGE" value="did client doing server" />
   </component>
 </project>
