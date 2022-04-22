@@ -73,8 +73,8 @@ public class Entity {
         message = null;
 
         System.out.println("Give a port for the Server if you don't want to use the default, otherwise press enter");
+        System.out.print("~> ");
         if (scanner.hasNext()) {
-            System.out.print("~> ");
             message = scanner.nextLine();
             tmpPort = Integer.parseInt(message);
             if (tmpPort < 65536) {

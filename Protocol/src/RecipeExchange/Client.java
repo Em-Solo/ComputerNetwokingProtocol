@@ -103,7 +103,7 @@ public class Client {
 
                     System.out.println("Server: " + responseMessage);
 
-                    System.out.print("> ");
+                    System.out.print("~> ");
 
                 }
 
