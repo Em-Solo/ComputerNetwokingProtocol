@@ -38,6 +38,22 @@ public class Entity {
         int tmpPort;
         String message = null;
 
+        System.out.println("Give a port for the Server if you don't want to use the default, otherwise press enter");
+        System.out.print("~> ");
+        if (scanner.hasNext()) {
+            message = scanner.nextLine();
+            tmpPort = Integer.parseInt(message);
+            if (tmpPort < 65536) {
+                serverPort = tmpPort;
+            } else {
+                System.out.println("Default port 42069 will be used");
+            }
+        } else {
+            System.out.println("Default port 42069 will be used");
+        }
+
+        message = null;
+
         System.out.println("Give the address you want the client to connect to");
         boolean gotAddress = false;
         while (!gotAddress) {
@@ -63,22 +79,6 @@ public class Entity {
             tmpPort = Integer.parseInt(message);
             if (tmpPort < 65536) {
                 clientPort = tmpPort;
-            } else {
-                System.out.println("Default port 42069 will be used");
-            }
-        } else {
-            System.out.println("Default port 42069 will be used");
-        }
-
-        message = null;
-
-        System.out.println("Give a port for the Server if you don't want to use the default, otherwise press enter");
-        System.out.print("~> ");
-        if (scanner.hasNext()) {
-            message = scanner.nextLine();
-            tmpPort = Integer.parseInt(message);
-            if (tmpPort < 65536) {
-                serverPort = tmpPort;
             } else {
                 System.out.println("Default port 42069 will be used");
             }
