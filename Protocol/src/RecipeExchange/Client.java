@@ -7,13 +7,16 @@ import java.util.Scanner;
 
 public class Client {
 
-    int destPort = 0;
+    private int destPort = 42069;
+    private String destAddress = null;
 
-    public static final String SERVER_HOSTNAME = "localhost";
-    DatagramSocket clientSocket = null;
+    private DatagramSocket clientSocket = null;
 
-    public Client(int port) {
-       this.destPort = port;
+    public Client(String address, int port) {
+        this.destAddress = address;
+        if (port < 65536) {
+            this.destPort = port;
+        }
     }
 
     public void start() {
@@ -21,7 +24,7 @@ public class Client {
 
         try {
             clientSocket = new DatagramSocket();
-        } catch(SocketException ex) {
+        } catch (SocketException ex) {
             System.err.println(
                     "Failed to initialize the client socket. " +
                             "Is there a free port?"
@@ -29,12 +32,11 @@ public class Client {
             ex.printStackTrace();
         }
 
-        //check to see if this good or use commented out variable
         final InetAddress targetServerAddress;
         try {
-            targetServerAddress = InetAddress.getByName(SERVER_HOSTNAME);
-        } catch ( UnknownHostException e ) {
-            System.err.println("Unknown host: " + SERVER_HOSTNAME);
+            targetServerAddress = InetAddress.getByName(destAddress);
+        } catch (UnknownHostException e) {
+            System.err.println("Unknown host: " + destAddress);
             e.printStackTrace();
             return;
         }
@@ -88,10 +90,10 @@ public class Client {
                     // Runnable to accept data from clients simultaneously with
                     // accepting input from the terminal.
                     DatagramPacket incomingPacket = new DatagramPacket(
-                      receivingBuffer,
-                      receivingBuffer.length,
-                      targetServerAddress,
-                      destPort
+                            receivingBuffer,
+                            receivingBuffer.length,
+                            targetServerAddress,
+                            destPort
                     );
                     clientSocket.receive(incomingPacket);
 
@@ -106,15 +108,10 @@ public class Client {
                 }
 
             } catch (IOException e) {
-                System.err.println( "Communication error with server" );
+                System.err.println("Communication error with server");
                 e.printStackTrace();
                 break;
             }
         }
     }
-
-//    public static void main(String[] args) {
-//        Client client = new Client();
-//        client.start();
-//    }
 }
