@@ -9,19 +9,19 @@ import java.nio.charset.StandardCharsets;
 
 public class Server {
 
-    //int serverPORT = 0;
+    int serverPORT = 0;
     DatagramSocket serverSocket = null;
 
-//    public Server (int port) {
-//        this.serverPORT = port;
-//    }
+    public Server (int port) {
+        this.serverPORT = port;
+    }
 
     public void start() {
         if (serverSocket != null) return;
 
         try {
 
-            serverSocket = new DatagramSocket(6969);
+            serverSocket = new DatagramSocket(serverPORT);
 
             System.out.println(
                     "Listening on port 6969" + "!"
@@ -87,9 +87,9 @@ public class Server {
         }
     }
 
-    public static void main(String[] args) {
-        Server server = new Server();
-        server.start();
-    }
+//    public static void main(String[] args) {
+//        Server server = new Server();
+//        server.start();
+//    }
 
 }

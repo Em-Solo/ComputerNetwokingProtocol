@@ -7,14 +7,14 @@ import java.util.Scanner;
 
 public class Client {
 
-    //int destPort = 0;
+    int destPort = 0;
 
     public static final String SERVER_HOSTNAME = "localhost";
     DatagramSocket clientSocket = null;
 
-//    public Client(int port) {
-//       this.destPort = port;
-//    }
+    public Client(int port) {
+       this.destPort = port;
+    }
 
     public void start() {
         Scanner scanner = new Scanner(System.in);
@@ -60,7 +60,7 @@ public class Client {
                                 exitBuff,
                                 exitBuff.length,
                                 targetServerAddress,
-                                6969
+                                destPort
                         );
                         clientSocket.send(exitPacket);
 
@@ -73,7 +73,7 @@ public class Client {
                             messageSendBuffer,
                             messageSendBuffer.length,
                             targetServerAddress,
-                            6969
+                            destPort
                     );
                     clientSocket.send(sendPacket);
 
@@ -91,7 +91,7 @@ public class Client {
                       receivingBuffer,
                       receivingBuffer.length,
                       targetServerAddress,
-                      6969
+                      destPort
                     );
                     clientSocket.receive(incomingPacket);
 
@@ -113,8 +113,8 @@ public class Client {
         }
     }
 
-    public static void main(String[] args) {
-        Client client = new Client();
-        client.start();
-    }
+//    public static void main(String[] args) {
+//        Client client = new Client();
+//        client.start();
+//    }
 }
