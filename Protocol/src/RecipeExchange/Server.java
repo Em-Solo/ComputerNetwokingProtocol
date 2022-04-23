@@ -52,10 +52,11 @@ public class Server {
                     if (receivedMessage.equalsIgnoreCase("exit")) {
                         serverSocket.close();
                         serverSocket = null;
+                        System.out.println("Server listening on port: " + serverPort + " has closed");
                         break;
                     }
 
-                    System.out.println("Client: " + receivedMessage);
+                    System.out.println("From Client: " + receivedMessage);
 
                     //maybe get an input or our recipes
                     String sendbackMessage = "Received your message, meow";

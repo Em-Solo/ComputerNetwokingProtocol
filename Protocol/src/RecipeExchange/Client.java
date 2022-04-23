@@ -27,7 +27,7 @@ public class Client {
         } catch (SocketException ex) {
             System.err.println(
                     "Failed to initialize the client socket. " +
-                            "Is there a free port?"
+                            "Is there a different free port?"
             );
             ex.printStackTrace();
         }
@@ -41,12 +41,9 @@ public class Client {
             return;
         }
 
-        System.out.print("~> ");
-
         //buffer size subject to change
         byte[] receivingBuffer = new byte[256];
 
-        // loop while user not enters "bye"
         while (!clientSocket.isClosed()) {
             try {
                 // TODO: when should a user be able to send messages?
@@ -67,6 +64,9 @@ public class Client {
                         clientSocket.send(exitPacket);
 
                         clientSocket.close();
+
+                        System.out.println("Client sending to address: " + destAddress + " on port: " + destPort + " has closed");
+
                         break;
                     }
 
@@ -101,9 +101,7 @@ public class Client {
                             incomingPacket.getData(), 0, incomingPacket.getLength(), StandardCharsets.UTF_8
                     );
 
-                    System.out.println("Server: " + responseMessage);
-
-                    System.out.print("~> ");
+                    System.out.println("From Server: " + responseMessage);
 
                 }
 

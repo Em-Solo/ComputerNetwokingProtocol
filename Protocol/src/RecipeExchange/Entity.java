@@ -1,8 +1,10 @@
 package RecipeExchange;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Scanner;
 
 public class Entity {
 
@@ -29,9 +31,13 @@ public class Entity {
         }).start();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Entity entity = new Entity();
-        Scanner scanner = new Scanner(System.in);
+//        Scanner scanner = new Scanner(System.in);
+
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(System.in)
+        );
 
         int clientPort = 65536, serverPort = 65536;
         String ip = null;
@@ -40,8 +46,8 @@ public class Entity {
 
         System.out.println("Give a port for the Server if you don't want to use the default, otherwise press enter");
         System.out.print("~> ");
-        if (scanner.hasNext()) {
-            message = scanner.nextLine();
+        message = reader.readLine();
+        if (!message.isBlank()) {
             tmpPort = Integer.parseInt(message);
             if (tmpPort < 65536) {
                 serverPort = tmpPort;
@@ -58,7 +64,7 @@ public class Entity {
         boolean gotAddress = false;
         while (!gotAddress) {
             System.out.print("~> ");
-            message = scanner.nextLine();
+            message = reader.readLine();
             try {
                 InetAddress.getByName(message);
             } catch (UnknownHostException e) {
@@ -67,15 +73,19 @@ public class Entity {
                 continue;
             }
             ip = message;
-            gotAddress =true;
+            if (ip.isBlank()) {
+                System.out.println("Give a different address, an empty address is not acceptable: ");
+            } else {
+                gotAddress = true;
+            }
         }
 
         message = null;
 
         System.out.println("Give a port for the Client otherwise press enter for default port to be used");
         System.out.print("~> ");
-        if (scanner.hasNext()) {
-            message = scanner.nextLine();
+        message = reader.readLine();
+        if (!message.isBlank()) {
             tmpPort = Integer.parseInt(message);
             if (tmpPort < 65536) {
                 clientPort = tmpPort;
