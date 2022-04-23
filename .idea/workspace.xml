@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2292f57b-9324-450e-8b98-e0609041f4f9" name="Changes" comment="Fully functioning Entity with port and address values being entered on console">
+    <list default="true" id="2292f57b-9324-450e-8b98-e0609041f4f9" name="Changes" comment="minor changes, commit before i start doing the ehllo message allong with header set up">
+      <change afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Header.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Entity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +99,7 @@
       <updated>1649946371436</updated>
       <workItem from="1650641680824" duration="11052000" />
       <workItem from="1650655745069" duration="2879000" />
-      <workItem from="1650712326011" duration="6387000" />
+      <workItem from="1650712326011" duration="15186000" />
     </task>
     <task id="LOCAL-00001" summary="did client doing server">
       <created>1650566004806</created>
@@ -143,7 +143,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650717993950</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="minor changes, commit before i start doing the ehllo message allong with header set up">
+      <created>1650730606903</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1650730606903</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -167,6 +174,7 @@
     <MESSAGE value="complete entity with problems" />
     <MESSAGE value="up to date minor fixes" />
     <MESSAGE value="Fully functioning Entity with port and address values being entered on console" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fully functioning Entity with port and address values being entered on console" />
+    <MESSAGE value="minor changes, commit before i start doing the ehllo message allong with header set up" />
+    <option name="LAST_COMMIT_MESSAGE" value="minor changes, commit before i start doing the ehllo message allong with header set up" />
   </component>
 </project>

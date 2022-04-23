@@ -1,5 +1,6 @@
 package RecipeExchange;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
@@ -43,9 +44,38 @@ public class Client {
 
         //buffer size subject to change
         byte[] receivingBuffer = new byte[256];
+        int buffSize = receivingBuffer.length;
+
+        Header headerCreation = new Header();
+
+        try {
+            byte[] header = headerCreation.headerSetup(1, 1, 1);
+
+            byte[] size = headerCreation.intToBytes(buffSize);
+
+            //if this kind of byte array concatanation check website for other https://stackoverflow.com/questions/5513152/easy-way-to-concatenate-two-byte-arrays
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
+            outputStream.write( header );
+            outputStream.write( size );
+
+            byte[] helloBuffer = outputStream.toByteArray( );
+
+            DatagramPacket sendPacket = new DatagramPacket(
+                    helloBuffer,
+                    helloBuffer.length,
+                    targetServerAddress,
+                    destPort
+            );
+            clientSocket.send(sendPacket);
+
+        } catch (IOException e) {
+            System.err.println("Communication error with server at hallo step");
+            e.printStackTrace();
+        }
 
         while (!clientSocket.isClosed()) {
             try {
+
                 if (System.in.available() > 0) {
                     String message = scanner.nextLine();
 
