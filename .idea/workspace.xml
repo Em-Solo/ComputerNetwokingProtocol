@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2292f57b-9324-450e-8b98-e0609041f4f9" name="Changes" comment="up to date minor fixes">
+    <list default="true" id="2292f57b-9324-450e-8b98-e0609041f4f9" name="Changes" comment="Fully functioning Entity with port and address values being entered on console">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Entity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +99,7 @@
       <updated>1649946371436</updated>
       <workItem from="1650641680824" duration="11052000" />
       <workItem from="1650655745069" duration="2879000" />
-      <workItem from="1650712326011" duration="3543000" />
+      <workItem from="1650712326011" duration="6387000" />
     </task>
     <task id="LOCAL-00001" summary="did client doing server">
       <created>1650566004806</created>
@@ -137,7 +136,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650656848713</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Fully functioning Entity with port and address values being entered on console">
+      <created>1650717993950</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1650717993950</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -160,6 +166,7 @@
     <MESSAGE value="Both Server and Client run, missing code from client written" />
     <MESSAGE value="complete entity with problems" />
     <MESSAGE value="up to date minor fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="up to date minor fixes" />
+    <MESSAGE value="Fully functioning Entity with port and address values being entered on console" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fully functioning Entity with port and address values being entered on console" />
   </component>
 </project>

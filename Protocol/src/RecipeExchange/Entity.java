@@ -16,7 +16,8 @@ public class Entity {
             @Override
             public void run() {
                 client = new Client(address, port);
-                client.start();
+                client.
+                        start();
             }
         }).start();
     }
@@ -33,17 +34,15 @@ public class Entity {
 
     public static void main(String[] args) throws IOException {
         Entity entity = new Entity();
-//        Scanner scanner = new Scanner(System.in);
 
-        BufferedReader reader = new BufferedReader(
-                new InputStreamReader(System.in)
-        );
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         int clientPort = 65536, serverPort = 65536;
         String ip = null;
         int tmpPort;
         String message = null;
 
+        //block of code for server port input.
         System.out.println("Give a port for the Server if you don't want to use the default, otherwise press enter");
         System.out.print("~> ");
         message = reader.readLine();
@@ -60,6 +59,7 @@ public class Entity {
 
         message = null;
 
+        //block of code for client address input.
         System.out.println("Give the address you want the client to connect to");
         boolean gotAddress = false;
         while (!gotAddress) {
@@ -82,6 +82,7 @@ public class Entity {
 
         message = null;
 
+        //block of code for client port input.
         System.out.println("Give a port for the Client otherwise press enter for default port to be used");
         System.out.print("~> ");
         message = reader.readLine();
@@ -95,6 +96,8 @@ public class Entity {
         } else {
             System.out.println("Default port 42069 will be used");
         }
+
+        reader.close();
 
         entity.startClient(ip, clientPort);
         entity.startServer(serverPort);

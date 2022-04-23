@@ -46,10 +46,6 @@ public class Client {
 
         while (!clientSocket.isClosed()) {
             try {
-                // TODO: when should a user be able to send messages?
-                //  Should every outgoing message expect a response before
-                //  another message can be sent?
-
                 if (System.in.available() > 0) {
                     String message = scanner.nextLine();
 
