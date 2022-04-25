@@ -99,6 +99,7 @@ public class Entity {
 
         reader.close();
 
+
         entity.startClient(ip, clientPort);
         entity.startServer(serverPort);
     }

@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2292f57b-9324-450e-8b98-e0609041f4f9" name="Changes" comment="minor changes, commit before i start doing the ehllo message allong with header set up">
-      <change afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Header.java" afterDir="false" />
+    <list default="true" id="2292f57b-9324-450e-8b98-e0609041f4f9" name="Changes" comment="finished header class">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Header.java" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/HelperMethods.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Protocol/src/protocol/P2P" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Protocol/src/protocol/P2P2" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,21 +44,8 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.Entity">
-    <configuration name="Entity" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="RecipeExchange.Entity" />
-      <module name="Protocol" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="RecipeExchange.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="RecipeExchange.Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Application.RecipeExchange.Entity">
+    <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="RecipeExchange.Client" />
       <module name="Protocol" />
       <extension name="coverage">
@@ -68,7 +58,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RecipeExchange.Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="RecipeExchange.Entity" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="RecipeExchange.Entity" />
+      <module name="Protocol" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="RecipeExchange.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="RecipeExchange.Server" />
       <module name="Protocol" />
       <extension name="coverage">
@@ -83,9 +86,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Entity" />
-        <item itemvalue="Application.RecipeExchange.Client" />
-        <item itemvalue="Application.RecipeExchange.Server" />
+        <item itemvalue="Application.RecipeExchange.Entity" />
       </list>
     </recent_temporary>
   </component>
@@ -99,7 +100,10 @@
       <updated>1649946371436</updated>
       <workItem from="1650641680824" duration="11052000" />
       <workItem from="1650655745069" duration="2879000" />
-      <workItem from="1650712326011" duration="15186000" />
+      <workItem from="1650712326011" duration="15998000" />
+      <workItem from="1650806558850" duration="8252000" />
+      <workItem from="1650818377107" duration="4522000" />
+      <workItem from="1650893631624" duration="8534000" />
     </task>
     <task id="LOCAL-00001" summary="did client doing server">
       <created>1650566004806</created>
@@ -150,7 +154,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650730606903</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="finished header class">
+      <created>1650743147899</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1650743147899</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -175,6 +186,7 @@
     <MESSAGE value="up to date minor fixes" />
     <MESSAGE value="Fully functioning Entity with port and address values being entered on console" />
     <MESSAGE value="minor changes, commit before i start doing the ehllo message allong with header set up" />
-    <option name="LAST_COMMIT_MESSAGE" value="minor changes, commit before i start doing the ehllo message allong with header set up" />
+    <MESSAGE value="finished header class" />
+    <option name="LAST_COMMIT_MESSAGE" value="finished header class" />
   </component>
 </project>
