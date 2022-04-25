@@ -1,11 +1,10 @@
 package RecipeExchange;
 
+import java.net.DatagramSocket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 public class HelperMethods {
-
-    public Integer messageNumber = 0;
 
     public HelperMethods() {
 
@@ -46,26 +45,23 @@ public class HelperMethods {
     }
 
     public boolean checkChecksum (byte[] receivedBuffer) {
-        boolean matches = false;
 
-        int receivedChecksum = receivedBuffer[4];
+        byte receivedChecksum = receivedBuffer[4];
 
         receivedBuffer[4] = 0;
 
-        int reCalculatedCkecksum = this.checksum(receivedBuffer);
+        Integer reCalculatedCkecksum = this.checksum(receivedBuffer);
 
-        if (receivedChecksum == reCalculatedCkecksum) {
-           matches = true;
-        }
+        if (receivedChecksum == reCalculatedCkecksum.byteValue())
+            return true;
 
-        return  matches;
+        return  false;
     }
 
-    public byte[] headerSetup ( Integer messageType, Integer numOfParts, Integer progOfMessage  ) {
+    public byte[] headerSetup (Integer messageNumber, Integer messageType, Integer numOfParts, Integer progOfMessage  ) {
         byte[] header = new byte[8];
 
-        header[0] = this.messageNumber.byteValue();
-        this.messageNumber++;
+        header[0] = messageNumber.byteValue();
 
         header[1] = messageType.byteValue();
         header[2] = numOfParts.byteValue();
@@ -79,5 +75,9 @@ public class HelperMethods {
         header[7] = 0;
 
         return header;
+    }
+
+    public void errorPacketSend(DatagramSocket socket, byte[] buffer) {
+
     }
 }

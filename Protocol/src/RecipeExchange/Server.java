@@ -12,9 +12,20 @@ public class Server {
     private int serverPort = 42069;
     private DatagramSocket serverSocket = null;
 
+    HelperMethods helperMethods = null;
+    InetAddress clientAddress = null;
+    int clientPort = 0;
+
     public Server (int port) {
+        this.helperMethods =new HelperMethods();
         if (port < 65536) {
             this.serverPort = port;
+        }
+    }
+
+    private void helloMessage(byte[] receiveBuffer,) {
+        try{
+
         }
     }
 
@@ -36,25 +47,36 @@ public class Server {
                 try {
 
                     //problem with incoming clients, who gets received and who ignored
-                    DatagramPacket incomingPacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
+                    DatagramPacket incomingPacket = new DatagramPacket(
+                            receiveBuffer,
+                            receiveBuffer.length);
                     serverSocket.receive(incomingPacket);
 
-                    InetAddress clientAddress = incomingPacket.getAddress();
-                    int clientPort = incomingPacket.getPort();
+                    byte[] receivedBuffer = incomingPacket.getData();
 
-                    String receivedMessage = new String(
-                            incomingPacket.getData(),
-                            0,
-                            incomingPacket.getLength(),
-                            StandardCharsets.UTF_8
-                    );
-
-                    if (receivedMessage.equalsIgnoreCase("exit")) {
-                        serverSocket.close();
-                        serverSocket = null;
-                        System.out.println("Server listening on port: " + serverPort + " has closed");
-                        break;
+                    if (incomingPacket.getAddress() == this.clientAddress && ) {
+                        helperMethods.errorPacketSend(serverSocket, receiveBuffer);
+                        continue;
                     }
+
+                    this.clientAddress = incomingPacket.getAddress();
+                    this.clientPort = incomingPacket.getPort();
+
+                    byte packetType = receivedBuffer[1];
+
+//                    String receivedMessage = new String(
+//                            incomingPacket.getData(),
+//                            0,
+//                            incomingPacket.getLength(),
+//                            StandardCharsets.UTF_8
+//                    );
+//
+//                    if (receivedMessage.equalsIgnoreCase("exit")) {
+//                        serverSocket.close();
+//                        serverSocket = null;
+//                        System.out.println("Server listening on port: " + serverPort + " has closed");
+//                        break;
+//                    }
 
                     System.out.println("From Client: " + receivedMessage);
 

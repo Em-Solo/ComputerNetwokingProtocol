@@ -12,6 +12,8 @@ public class Client {
     private int destPort = 42069;
     private String destAddress = null;
 
+    private Integer messageNumber = 0;
+
     private DatagramSocket clientSocket = null;
 
     HelperMethods helperMethods = null;
@@ -29,7 +31,7 @@ public class Client {
     private void helloMessage(byte[] receivingBuffer, InetAddress targetServerAddress) {
         for(int i=1; i<=5; i++) {
             try {
-                byte[] header = helperMethods.headerSetup(1, 1, 1);
+                byte[] header = helperMethods.headerSetup(this.messageNumber, 1, 1, 1);
 
                 int buffSize = receivingBuffer.length;
                 byte[] size = helperMethods.intToBytes(buffSize);
@@ -56,21 +58,19 @@ public class Client {
                         destPort
                 );
 
-                //TODO check if received and repeat if not
                 try {
                     clientSocket.receive(incomingHelloPacket);
                 } catch (SocketTimeoutException e) {
-                    System.out.println("Timeout");
+                    System.out.println("Timeout, packet was not received after timeout time passed");
                     continue;
 
                 }
 
                 byte[] receivedHelloBuffer = incomingHelloPacket.getData();
 
-                //TODO request another load of the packet if checksum not correct
-                boolean chechsumMatches = helperMethods.checkChecksum(receivedHelloBuffer);
+                boolean checksumMatches = helperMethods.checkChecksum(receivedHelloBuffer);
 
-                if (chechsumMatches == true) {
+                if (checksumMatches) {
                     System.out.println("Checksum matched");
 
                     byte[] dataOfPacket = Arrays.copyOfRange(receivedHelloBuffer, 8, receivedHelloBuffer.length);
@@ -82,7 +82,7 @@ public class Client {
                 }
 
             } catch (IOException e) {
-                System.err.println("Communication error with server at hallo step");
+                System.err.println("Communication error with server at hello step");
                 e.printStackTrace();
             }
         }
@@ -115,11 +115,12 @@ public class Client {
         byte[] receivingBuffer = new byte[256];
 
         this.helloMessage(receivingBuffer, targetServerAddress);
+        this.messageNumber++;
 
         while (!clientSocket.isClosed()) {
             try {
 
-                if (System.in.available() > 0) {
+                //if (System.in.available() > 0) {
                     String message = scanner.nextLine();
 
                     if (message.equalsIgnoreCase("exit")) {
@@ -133,6 +134,7 @@ public class Client {
                         clientSocket.send(exitPacket);
 
                         clientSocket.close();
+                        clientSocket = null;
 
                         System.out.println("Client sending to address: " + destAddress + " on port: " + destPort + " has closed");
 
@@ -172,7 +174,7 @@ public class Client {
 
                     System.out.println("From Server: " + responseMessage);
 
-                }
+                //}
 
             } catch (IOException e) {
                 System.err.println("Communication error with server");
