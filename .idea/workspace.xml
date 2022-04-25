@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2292f57b-9324-450e-8b98-e0609041f4f9" name="Changes" comment="finished header class">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Entity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Header.java" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/HelperMethods.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Protocol/src/protocol/P2P" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Protocol/src/protocol/P2P2" beforeDir="false" />
-    </list>
+    <list default="true" id="2292f57b-9324-450e-8b98-e0609041f4f9" name="Changes" comment="finished client hello message" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -103,7 +96,7 @@
       <workItem from="1650712326011" duration="15998000" />
       <workItem from="1650806558850" duration="8252000" />
       <workItem from="1650818377107" duration="4522000" />
-      <workItem from="1650893631624" duration="8534000" />
+      <workItem from="1650893631624" duration="8849000" />
     </task>
     <task id="LOCAL-00001" summary="did client doing server">
       <created>1650566004806</created>
@@ -161,7 +154,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650743147899</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="finished client hello message">
+      <created>1650903289780</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1650903289780</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -187,6 +187,7 @@
     <MESSAGE value="Fully functioning Entity with port and address values being entered on console" />
     <MESSAGE value="minor changes, commit before i start doing the ehllo message allong with header set up" />
     <MESSAGE value="finished header class" />
-    <option name="LAST_COMMIT_MESSAGE" value="finished header class" />
+    <MESSAGE value="finished client hello message" />
+    <option name="LAST_COMMIT_MESSAGE" value="finished client hello message" />
   </component>
 </project>
