@@ -16,8 +16,7 @@ public class Entity {
             @Override
             public void run() {
                 client = new Client(address, port);
-                client.
-                        start();
+                client.start();
             }
         }).start();
     }
@@ -32,7 +31,7 @@ public class Entity {
         }).start();
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args)  {
         Entity entity = new Entity();
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -42,62 +41,67 @@ public class Entity {
         int tmpPort;
         String message = null;
 
-        //block of code for server port input.
-        System.out.println("Give a port for the Server if you don't want to use the default, otherwise press enter");
-        System.out.print("~> ");
-        message = reader.readLine();
-        if (!message.isBlank()) {
-            tmpPort = Integer.parseInt(message);
-            if (tmpPort < 65536) {
-                serverPort = tmpPort;
-            } else {
-                System.out.println("Default port 42069 will be used");
-            }
-        } else {
-            System.out.println("Default port 42069 will be used");
-        }
-
-        message = null;
-
-        //block of code for client address input.
-        System.out.println("Give the address you want the client to connect to");
-        boolean gotAddress = false;
-        while (!gotAddress) {
+        try {
+            //block of code for server port input.
+            System.out.println("Give a port for the Server if you don't want to use the default, otherwise press enter");
             System.out.print("~> ");
             message = reader.readLine();
-            try {
-                InetAddress.getByName(message);
-            } catch (UnknownHostException e) {
-                System.err.println("Unknown host: " + message);
-                System.out.println("Give a different address: ");
-                continue;
-            }
-            ip = message;
-            if (ip.isBlank()) {
-                System.out.println("Give a different address, an empty address is not acceptable: ");
-            } else {
-                gotAddress = true;
-            }
-        }
-
-        message = null;
-
-        //block of code for client port input.
-        System.out.println("Give a port for the Client otherwise press enter for default port to be used");
-        System.out.print("~> ");
-        message = reader.readLine();
-        if (!message.isBlank()) {
-            tmpPort = Integer.parseInt(message);
-            if (tmpPort < 65536) {
-                clientPort = tmpPort;
+            if (!message.isBlank()) {
+                tmpPort = Integer.parseInt(message);
+                if (tmpPort < 65536) {
+                    serverPort = tmpPort;
+                } else {
+                    System.out.println("Default port 42069 will be used");
+                }
             } else {
                 System.out.println("Default port 42069 will be used");
             }
-        } else {
-            System.out.println("Default port 42069 will be used");
-        }
 
-        reader.close();
+            message = null;
+
+            //block of code for client address input.
+            System.out.println("Give the address you want the client to connect to");
+            boolean gotAddress = false;
+            while (!gotAddress) {
+                System.out.print("~> ");
+                message = reader.readLine();
+                try {
+                    InetAddress.getByName(message);
+                } catch (UnknownHostException e) {
+                    System.err.println("Unknown host: " + message);
+                    System.out.println("Give a different address: ");
+                    continue;
+                }
+                ip = message;
+                if (ip.isBlank()) {
+                    System.out.println("Give a different address, an empty address is not acceptable: ");
+                } else {
+                    gotAddress = true;
+                }
+            }
+
+            message = null;
+
+            //block of code for client port input.
+            System.out.println("Give a port for the Client otherwise press enter for default port to be used");
+            System.out.print("~> ");
+            message = reader.readLine();
+            if (!message.isBlank()) {
+                tmpPort = Integer.parseInt(message);
+                if (tmpPort < 65536) {
+                    clientPort = tmpPort;
+                } else {
+                    System.out.println("Default port 42069 will be used");
+                }
+            } else {
+                System.out.println("Default port 42069 will be used");
+            }
+
+            reader.close();
+        } catch (IOException e) {
+            System.err.println("Reading ports and addresses failed");
+            e.printStackTrace();
+        }
 
         entity.startClient(ip, clientPort);
         entity.startServer(serverPort);

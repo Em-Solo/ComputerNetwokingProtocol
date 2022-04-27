@@ -1,5 +1,7 @@
 package RecipeExchange;
 
+import java.io.IOException;
+import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -50,9 +52,9 @@ public class HelperMethods {
 
         receivedBuffer[4] = 0;
 
-        Integer reCalculatedCkecksum = this.checksum(receivedBuffer);
+        Integer reCalculatedChecksum = this.checksum(receivedBuffer);
 
-        if (receivedChecksum == reCalculatedCkecksum.byteValue())
+        if (receivedChecksum == reCalculatedChecksum.byteValue())
             return true;
 
         return  false;
@@ -77,7 +79,27 @@ public class HelperMethods {
         return header;
     }
 
-    public void errorPacketSend(DatagramSocket socket, byte[] buffer) {
+    public void errorPacketSend(DatagramSocket socket, DatagramPacket receivedPacket) {
+
+        try {
+            byte[] errorBuffer = headerSetup(0, 7, 1, 1);
+
+            errorBuffer[4] = checksum(errorBuffer).byteValue();
+
+            DatagramPacket errorPacket = new DatagramPacket(
+                    errorBuffer,
+                    errorBuffer.length,
+                    receivedPacket.getAddress(),
+                    receivedPacket.getPort()
+            );
+
+            socket.send(errorPacket);
+
+        } catch ( IOException e ) {
+            System.out.println(
+                    "Communication error while sending error packet. "
+            );
+        }
 
     }
 }
