@@ -46,6 +46,18 @@ public class HelperMethods {
         return lrc;
     }
 
+    public int indexOf(byte[] buffer, byte t) {
+
+        for (int i = 0; i < buffer.length; i++) {
+            if (buffer[i] == t) {
+                return i;
+            }
+        }
+
+        return buffer.length;
+
+    }
+
     public boolean checkChecksum (byte[] receivedBuffer) {
 
         byte receivedChecksum = receivedBuffer[4];

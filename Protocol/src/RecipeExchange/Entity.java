@@ -15,8 +15,12 @@ public class Entity {
         (new Thread() {
             @Override
             public void run() {
-                client = new Client(address, port);
-                client.start();
+                boolean restart = false;
+                do {
+                    client = new Client(address, port);
+                    restart = client.start();
+                } while (restart);
+
             }
         }).start();
     }
@@ -96,8 +100,6 @@ public class Entity {
             } else {
                 System.out.println("Default port 42069 will be used");
             }
-
-            reader.close();
         } catch (IOException e) {
             System.err.println("Reading ports and addresses failed");
             e.printStackTrace();
@@ -105,6 +107,13 @@ public class Entity {
 
         entity.startClient(ip, clientPort);
         entity.startServer(serverPort);
+
+//        try {
+//            reader.close();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+
     }
 
 }
