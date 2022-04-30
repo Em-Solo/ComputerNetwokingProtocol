@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2292f57b-9324-450e-8b98-e0609041f4f9" name="Changes" comment="Starting up main part of protocol">
-      <change afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Recipes.java" afterDir="false" />
+    <list default="true" id="2292f57b-9324-450e-8b98-e0609041f4f9" name="Changes" comment="Finished Client and recipe class. Client without packet division">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Entity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Protocol/src/RecipeExchange/HelperMethods.java" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/HelperMethods.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +106,8 @@
       <workItem from="1651072414107" duration="617000" />
       <workItem from="1651073475357" duration="10204000" />
       <workItem from="1651150338560" duration="22056000" />
-      <workItem from="1651238535822" duration="18340000" />
+      <workItem from="1651238535822" duration="20112000" />
+      <workItem from="1651320637515" duration="15808000" />
     </task>
     <task id="LOCAL-00001" summary="did client doing server">
       <created>1650566004806</created>
@@ -194,7 +193,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651085466899</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Finished Client and recipe class. Client without packet division">
+      <created>1651263470730</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1651263470730</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -223,6 +229,7 @@
     <MESSAGE value="finished client hello message" />
     <MESSAGE value="In Progress for server hello" />
     <MESSAGE value="Starting up main part of protocol" />
-    <option name="LAST_COMMIT_MESSAGE" value="Starting up main part of protocol" />
+    <MESSAGE value="Finished Client and recipe class. Client without packet division" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished Client and recipe class. Client without packet division" />
   </component>
 </project>

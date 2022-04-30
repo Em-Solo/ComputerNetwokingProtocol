@@ -17,7 +17,7 @@ public class Client {
 
     private DatagramSocket clientSocket = null;
 
-    private int receivingBufferSize = 256;
+    private final int receivingBufferSize = 10000;
     private byte[] receivingBuffer = new byte[this.receivingBufferSize];
 
     private HelperMethods helperMethods = null;
@@ -96,47 +96,6 @@ public class Client {
                     reconnect = false;
                 }
 
-//                if (System.in.available() > 0) {
-//                    String message = scanner.nextLine();
-//
-//                    if (message.equalsIgnoreCase("exit")) {
-//                        this.goodbye();
-//                    }
-//
-//                    byte[] messageSendBuffer = message.getBytes(StandardCharsets.UTF_8);
-//                    DatagramPacket sendPacket = new DatagramPacket(
-//                            messageSendBuffer,
-//                            messageSendBuffer.length,
-//                            targetServerAddress,
-//                            destPort
-//                    );
-//                    clientSocket.send(sendPacket);
-//
-//                    // Contrary to the TCP example, we attempt to receive the
-//                    // message from the server right after we've sent it.
-//                    //
-//                    // This is done to get a trivial working proof-of-concept,
-//                    // however this is hardly robust and isn't really useful
-//                    // for anything other than a simple echo server.
-//                    //
-//                    // You might want to use a Java Thread or asynchronous
-//                    // Runnable to accept data from clients simultaneously with
-//                    // accepting input from the terminal.
-//                    DatagramPacket incomingPacket = new DatagramPacket(
-//                            receivingBuffer,
-//                            receivingBuffer.length,
-//                            targetServerAddress,
-//                            destPort
-//                    );
-//                    clientSocket.receive(incomingPacket);
-//
-//                    String responseMessage = new String(
-//                            incomingPacket.getData(), 0, incomingPacket.getLength(), StandardCharsets.UTF_8
-//                    );
-//
-//                    System.out.println("Client: From Server: " + responseMessage);
-//
-//                }
 
             } catch (IOException e) {
                 System.err.println("Client: Error with reading from console");
@@ -202,7 +161,7 @@ public class Client {
 
                     if (receivedHelloBuffer[1] == 7){
                         System.out.println("Client: Received error packet from server, hello process, restarting");
-                        return true;
+                        return this.restart();
                     }
 
                     byte[] dataOfPacket = Arrays.copyOfRange(receivedHelloBuffer, 8, receivedHelloBuffer.length);
@@ -295,7 +254,7 @@ public class Client {
 
                     if (receivedListBuffer[1] == 7){
                         System.out.println("Client: Received error packet from server, recipe list process, restarting");
-                        return true;
+                        return this.restart();
                     }
 
                     byte[] dataOfPacket = Arrays.copyOfRange(receivedListBuffer, 8, receivedListBuffer.length);
@@ -395,7 +354,7 @@ public class Client {
 
                     if (receivedRecipeBuffer[1] == 7){
                         System.out.println("Client: Received error packet from server, recipe ID process, restarting");
-                        return true;
+                        return this.restart();
                     }
 
                     if (receivedRecipeBuffer[1] == 8){
@@ -424,13 +383,16 @@ public class Client {
             }
         }
 
-        return restart();
+        return this.restart();
     }
 
     private void goodbye(InetAddress serverAddress) {
 
         try {
             byte[] goodbyeBuff = helperMethods.headerSetup(this.messageNumber, 6, 1, 1);
+
+            //calculating and then setting the checksum in the buffer
+            goodbyeBuff[4] = helperMethods.checksum(goodbyeBuff).byteValue();
 
             DatagramPacket goodbyePacket = new DatagramPacket(
                     goodbyeBuff,

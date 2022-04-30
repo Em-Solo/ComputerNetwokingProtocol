@@ -10,17 +10,22 @@ public class Server {
     private int serverPort = 42069;
     private DatagramSocket serverSocket = null;
 
+    private final int receivingBufferSize = 10000;
+    byte[] receivingBuffer = new byte[receivingBufferSize];
+
     private HelperMethods helperMethods = null;
+
+    private Recipes recipes = null;
 
     private InetAddress clientAddress = null;
     private int clientPort = 0;
     private boolean connected = false;
-    //TODO remember to empty them out when you close the connection
 
     private int clientBufferSize = 0;
 
     public Server (int port) {
         this.helperMethods =new HelperMethods();
+        this.recipes = new Recipes();
         if (port < 65536) {
             this.serverPort = port;
         }
@@ -39,38 +44,45 @@ public class Server {
                     "Server: Listening on port: " + serverPort + "!"
             );
 
-            byte[] receivingBuffer = new byte[256];
-
             while (!serverSocket.isClosed()) {
 
                 try {
 
-
+                    this.receivingBuffer = new byte[this.receivingBufferSize];
                     DatagramPacket incomingPacket = new DatagramPacket(
-                            receivingBuffer,
-                            receivingBuffer.length);
+                            this.receivingBuffer,
+                            this.receivingBuffer.length);
 
 
                     try {
-                        serverSocket.receive(incomingPacket);
+                        this.serverSocket.receive(incomingPacket);
                     } catch (SocketTimeoutException e) {
                         System.out.println("Server: Timeout, Server has been idle on receive for 5 minutes");
-                        return;
+
+                        this.serverReset();
+
+                        continue;
                     }
 
                     byte[] receivedBufferFromClient = incomingPacket.getData();
 
                     if (!helperMethods.checkChecksum(receivedBufferFromClient)){
                         helperMethods.errorPacketSend(serverSocket, incomingPacket);
+
+                        this.serverReset();
+
+                        continue;
                     }
 
-                    if (incomingPacket.getAddress() != this.clientAddress  ) {
+                    if (!incomingPacket.getAddress().equals(this.clientAddress)) {
                         if (!connected && receivedBufferFromClient[1] == 1) {
                             connected = true;
                             this.clientAddress = incomingPacket.getAddress();
                             this.clientPort = incomingPacket.getPort();
                         } else {
+                            System.out.println("Server: Someone is trying to connect to you, but we send error package because you are either already busy with a another client, or a new client tries to connect with wrong initial packet");
                             helperMethods.errorPacketSend(serverSocket, incomingPacket);
+                            continue;
                         }
                     }
 
@@ -82,45 +94,22 @@ public class Server {
                         case 0:
                             break;
                         case 1:
-                            this.helloResponseMessage(receivingBuffer, receivedBufferFromClient);
+                            this.helloResponseMessage(receivedBufferFromClient);
                             break;
                         case 2:
+                            this.recipeResponseFromId(receivedBufferFromClient);
                             break;
                         case 3:
+                            this.listOfRecipesResponse(receivedBufferFromClient);
                             break;
-                        case 4:
+                        case 6:
+                            this.goodbye(receivedBufferFromClient);
                             break;
                         default:
                             helperMethods.errorPacketSend(serverSocket, incomingPacket);
+                            this.serverReset();
+                            continue;
                     }
-//                    String receivedMessage = new String(
-//                            incomingPacket.getData(),
-//                            0,
-//                            incomingPacket.getLength(),
-//                            StandardCharsets.UTF_8
-//                    );
-//
-//                    if (receivedMessage.equalsIgnoreCase("exit")) {
-//                        serverSocket.close();
-//                        serverSocket = null;
-//                        System.out.println("Server listening on port: " + serverPort + " has closed");
-//                        break;
-//                    }
-//
-//                    System.out.println("Server: From Client: " + receivedMessage);
-//
-//                    //maybe get an input or our recipes
-//                    String sendbackMessage = "Received your message, meow";
-//                    byte[] sendbackBuffer = sendbackMessage.getBytes(StandardCharsets.UTF_8);
-//
-//                    DatagramPacket sendbackPacket = new DatagramPacket(
-//                            sendbackBuffer,
-//                            sendbackBuffer.length,
-//                            clientAddress,
-//                            clientPort
-//                    );
-//
-//                    serverSocket.send(sendbackPacket);
 
                 } catch ( IOException e ) {
                     System.out.println(
@@ -132,20 +121,21 @@ public class Server {
             }
 
         } catch ( SocketException e ) {
-
             System.out.println(
                     "Server: Failed on starting the server. " +
-                            "Port already taken?"
+                            "Port might be taken"
             );
             e.printStackTrace();
         }
     }
 
-    private void helloResponseMessage(byte[] receivingBuffer, byte[] helloBufferClient) {
+    private void helloResponseMessage(byte[] helloBufferClient) {
 
+        //processing the data of the hallo packet
         byte[] dataOfPacket = Arrays.copyOfRange(helloBufferClient, 8, helloBufferClient.length);
         this.clientBufferSize = helperMethods.bytesToInt(dataOfPacket);
 
+        //sending back hallo message
         try{
             Byte messageNumber = helloBufferClient[0];
             byte[] header = helperMethods.headerSetup(messageNumber.intValue(), 1, 1, 1);
@@ -165,11 +155,142 @@ public class Server {
                     clientPort
             );
             serverSocket.send(sendPacket);
+
         } catch (IOException e) {
-            System.err.println("Communication error with client at hello step");
+            System.err.println("Server: Communication error with client at hello step");
             e.printStackTrace();
         }
     }
 
+    private void listOfRecipesResponse(byte[] listRequestBufferClient) {
+
+        byte[] dataOfPacket = Arrays.copyOfRange(listRequestBufferClient, 8, listRequestBufferClient.length);
+        String recipeName = new String(
+                dataOfPacket, 0, helperMethods.indexOf(dataOfPacket, (byte) 0x0), StandardCharsets.UTF_8
+        );
+
+        try{
+            Byte messageNumber = listRequestBufferClient[0];
+            byte[] header = helperMethods.headerSetup(messageNumber.intValue(), 4, 1, 1);
+
+            byte[] recipeList = this.recipes.listRepresentationOfSpecificRecipes(recipeName).getBytes(StandardCharsets.UTF_8);
+
+            byte[] recipeListBuffer = helperMethods.byteArrayConc2(header, recipeList);
+
+
+
+            //calculating and then setting the checksum in the buffer
+            recipeListBuffer[4] = helperMethods.checksum(recipeListBuffer).byteValue();
+
+            DatagramPacket sendPacket = new DatagramPacket(
+                    recipeListBuffer,
+                    recipeListBuffer.length,
+                    clientAddress,
+                    clientPort
+            );
+            serverSocket.send(sendPacket);
+
+        } catch (IOException e) {
+            System.err.println("Server: Communication error with client at recipe list request step");
+            e.printStackTrace();
+        }
+
+        System.out.println("Server: List of recipes containing the string the client send to the server, has been sent back to the client, will be empty if no such recipes exist");
+
+    }
+
+    private void recipeResponseFromId(byte[] idRequestBufferClient) {
+
+        byte[] dataOfPacket = Arrays.copyOfRange(idRequestBufferClient, 8, idRequestBufferClient.length);
+        String recipeId = new String(
+                dataOfPacket, 0, helperMethods.indexOf(dataOfPacket, (byte) 0x0), StandardCharsets.UTF_8
+        );
+
+        try{
+            Byte messageNumber = idRequestBufferClient[0];
+            byte[] header = null;
+
+            String recipeString = this.recipes.recipeFromId(recipeId);
+            byte[] recipeFromId = null;
+
+            byte[] recipeFromIdBuffer = null;
+
+            if (recipeString == null) {
+
+                recipeFromIdBuffer = helperMethods.headerSetup(messageNumber.intValue(), 8, 1, 1);
+
+                System.out.println("Server: The recipe requested by Id was not found, so a Not Found package was send");
+
+            } else {
+
+                header = helperMethods.headerSetup(messageNumber.intValue(), 5, 1, 1);
+
+                recipeFromId = recipeString.getBytes(StandardCharsets.UTF_8);
+
+                recipeFromIdBuffer = helperMethods.byteArrayConc2(header, recipeFromId);
+
+                System.out.println("Server: The recipe requested by Id has been sent to the client");
+
+            }
+
+            //calculating and then setting the checksum in the buffer
+            recipeFromIdBuffer[4] = helperMethods.checksum(recipeFromIdBuffer).byteValue();
+
+            DatagramPacket sendPacket = new DatagramPacket(
+                    recipeFromIdBuffer,
+                    recipeFromIdBuffer.length,
+                    clientAddress,
+                    clientPort
+            );
+            serverSocket.send(sendPacket);
+
+        } catch (IOException e) {
+            System.err.println("Server: Communication error with client at recipe ID request step");
+            e.printStackTrace();
+        }
+
+        System.out.println("Server: The recipe requested by Id has been sent to the client");
+
+    }
+
+    private void goodbye(byte[] goodbyeBufferClient) {
+
+        System.out.println("Server: The server recieved a goodbye from the client so it will try to send one back and the server will be reset");
+
+        try{
+            Byte messageNumber = goodbyeBufferClient[0];
+            byte[] goodbyeBuffer = helperMethods.headerSetup(messageNumber.intValue(), 6, 1, 1);
+
+            //calculating and then setting the checksum in the buffer
+            goodbyeBuffer[4] = helperMethods.checksum(goodbyeBuffer).byteValue();
+
+            DatagramPacket sendPacket = new DatagramPacket(
+                    goodbyeBuffer,
+                    goodbyeBuffer.length,
+                    clientAddress,
+                    clientPort
+            );
+            serverSocket.send(sendPacket);
+
+        } catch (IOException e) {
+            System.err.println("Server: Communication error with client at goodbye step");
+            e.printStackTrace();
+        }
+
+        this.serverReset();
+
+    }
+
+    private void serverReset() {
+        clientAddress = null;
+        clientPort = 0;
+        connected = false;
+
+        receivingBuffer = new byte[receivingBufferSize];
+
+        clientBufferSize = 0;
+
+
+    }
 
 }
