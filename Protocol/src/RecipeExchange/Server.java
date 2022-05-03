@@ -10,7 +10,7 @@ public class Server {
     private int serverPort = 42069;
     private DatagramSocket serverSocket = null;
 
-    private final int receivingBufferSize = 10000;
+    private final int receivingBufferSize = 1000;
     byte[] receivingBuffer = new byte[receivingBufferSize];
 
     private HelperMethods helperMethods = null;
@@ -73,6 +73,11 @@ public class Server {
 
                         continue;
                     }
+
+                    System.out.println(incomingPacket.getAddress().toString());
+                    if (this.clientAddress != null)
+                        System.out.println(this.clientAddress.toString());
+                    System.out.println(connected);
 
                     if (!incomingPacket.getAddress().equals(this.clientAddress)) {
                         if (!connected && receivedBufferFromClient[1] == 1) {
@@ -169,30 +174,46 @@ public class Server {
                 dataOfPacket, 0, helperMethods.indexOf(dataOfPacket, (byte) 0x0), StandardCharsets.UTF_8
         );
 
-        try{
-            Byte messageNumber = listRequestBufferClient[0];
-            byte[] header = helperMethods.headerSetup(messageNumber.intValue(), 4, 1, 1);
+        byte[] recipeList = this.recipes.listRepresentationOfSpecificRecipes(recipeName).getBytes(StandardCharsets.UTF_8);
 
-            byte[] recipeList = this.recipes.listRepresentationOfSpecificRecipes(recipeName).getBytes(StandardCharsets.UTF_8);
-
-            byte[] recipeListBuffer = helperMethods.byteArrayConc2(header, recipeList);
+        Byte messageNumber = listRequestBufferClient[0];
 
 
+        if ( (recipeList.length +  8) > this.clientBufferSize) {
 
-            //calculating and then setting the checksum in the buffer
-            recipeListBuffer[4] = helperMethods.checksum(recipeListBuffer).byteValue();
+            boolean sent = this.helperMethods.sendMultiplePackets(this.serverSocket, this.receivingBuffer, this.clientAddress, clientPort, recipeList, this.clientBufferSize, messageNumber.intValue(), 4 );
 
-            DatagramPacket sendPacket = new DatagramPacket(
-                    recipeListBuffer,
-                    recipeListBuffer.length,
-                    clientAddress,
-                    clientPort
-            );
-            serverSocket.send(sendPacket);
+            if (!sent) {
+                this.serverReset();
+                return;
+            }
 
-        } catch (IOException e) {
-            System.err.println("Server: Communication error with client at recipe list request step");
-            e.printStackTrace();
+        } else {
+
+            try {
+
+                byte[] header = helperMethods.headerSetup(messageNumber.intValue(), 4, 1, 1);
+
+
+                byte[] recipeListBuffer = helperMethods.byteArrayConc2(header, recipeList);
+
+
+                //calculating and then setting the checksum in the buffer
+                recipeListBuffer[4] = helperMethods.checksum(recipeListBuffer).byteValue();
+
+                DatagramPacket sendPacket = new DatagramPacket(
+                        recipeListBuffer,
+                        recipeListBuffer.length,
+                        clientAddress,
+                        clientPort
+                );
+                serverSocket.send(sendPacket);
+
+            } catch (IOException e) {
+                System.err.println("Server: Communication error with client at recipe list request step");
+                e.printStackTrace();
+            }
+
         }
 
         System.out.println("Server: List of recipes containing the string the client send to the server, has been sent back to the client, will be empty if no such recipes exist");
@@ -211,7 +232,7 @@ public class Server {
             byte[] header = null;
 
             String recipeString = this.recipes.recipeFromId(recipeId);
-            byte[] recipeFromId = null;
+
 
             byte[] recipeFromIdBuffer = null;
 
@@ -223,26 +244,38 @@ public class Server {
 
             } else {
 
-                header = helperMethods.headerSetup(messageNumber.intValue(), 5, 1, 1);
+                byte[] recipeFromId = recipeString.getBytes(StandardCharsets.UTF_8);
 
-                recipeFromId = recipeString.getBytes(StandardCharsets.UTF_8);
+                if ( (recipeFromId.length + 8) > clientBufferSize) {
 
-                recipeFromIdBuffer = helperMethods.byteArrayConc2(header, recipeFromId);
+                    boolean sent = this.helperMethods.sendMultiplePackets(this.serverSocket, this.receivingBuffer, this.clientAddress, clientPort, recipeFromId, this.clientBufferSize, messageNumber.intValue(), 5);
 
-                System.out.println("Server: The recipe requested by Id has been sent to the client");
+                    if (!sent) {
+                        this.serverReset();
+                        return;
+                    }
+
+                } else {
+
+                    header = helperMethods.headerSetup(messageNumber.intValue(), 5, 1, 1);
+
+
+                    recipeFromIdBuffer = helperMethods.byteArrayConc2(header, recipeFromId);
+
+                    //calculating and then setting the checksum in the buffer
+                    recipeFromIdBuffer[4] = helperMethods.checksum(recipeFromIdBuffer).byteValue();
+
+                    DatagramPacket sendPacket = new DatagramPacket(
+                            recipeFromIdBuffer,
+                            recipeFromIdBuffer.length,
+                            clientAddress,
+                            clientPort
+                    );
+                    serverSocket.send(sendPacket);
+
+                }
 
             }
-
-            //calculating and then setting the checksum in the buffer
-            recipeFromIdBuffer[4] = helperMethods.checksum(recipeFromIdBuffer).byteValue();
-
-            DatagramPacket sendPacket = new DatagramPacket(
-                    recipeFromIdBuffer,
-                    recipeFromIdBuffer.length,
-                    clientAddress,
-                    clientPort
-            );
-            serverSocket.send(sendPacket);
 
         } catch (IOException e) {
             System.err.println("Server: Communication error with client at recipe ID request step");

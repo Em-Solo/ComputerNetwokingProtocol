@@ -17,7 +17,7 @@ public class Client {
 
     private DatagramSocket clientSocket = null;
 
-    private final int receivingBufferSize = 10000;
+    private final int receivingBufferSize = 1000;
     private byte[] receivingBuffer = new byte[this.receivingBufferSize];
 
     private HelperMethods helperMethods = null;
@@ -252,30 +252,48 @@ public class Client {
                 if (helperMethods.checkChecksum(receivedListBuffer)) {
                     System.out.println("Client: Checksum matched");
 
-                    if (receivedListBuffer[1] == 7){
+                    if (receivedListBuffer[1] == 7) {
                         System.out.println("Client: Received error packet from server, recipe list process, restarting");
                         return this.restart();
                     }
 
+                    String recipeList = null;
                     byte[] dataOfPacket = Arrays.copyOfRange(receivedListBuffer, 8, receivedListBuffer.length);
 
-                    if (dataOfPacket[0] == (byte) 0x0){
-                        System.out.println("Client: You have received an empty list, recipes containing: " + input + " dont exist in the server of the person you request them from");
+                    if (dataOfPacket[0] == (byte) 0x0) {
+
+                        System.out.println("Client: You have received an empty list, recipes containing: " + input + " don't exist in the server of the person you request them from");
+
                     } else {
-                        String recipeList = new String(
-                                dataOfPacket, 0, helperMethods.indexOf(dataOfPacket, (byte) 0x0), StandardCharsets.UTF_8
-                        );
+
+                        if (receivedListBuffer[2] > 1) {
+
+                            recipeList = this.helperMethods.receiveMultiplePackets(clientSocket, receivingBuffer, incomingListPacket);
+
+                            if (recipeList.equals("error")){
+                                return this.restart();
+                            }
+                            if (recipeList.equals("continue")){
+                                continue;
+                            }
+
+                        } else {
+                            recipeList = new String(
+                                    dataOfPacket, 0, helperMethods.indexOf(dataOfPacket, (byte) 0x0), StandardCharsets.UTF_8
+                            );
+                        }
 
                         System.out.println("Client: List request successfully  done");
                         System.out.println("Client: The recipe list with their id's, that were received from the server:\n" + recipeList);
+
                     }
 
                     return false;
+
                 } else {
                     System.out.println("Client: Checksum doesnt match");
                     continue;
                 }
-
 
             } catch (IOException e) {
                 System.err.println("Client: Communication error with server at recipe list step, either on send or receive");
@@ -357,20 +375,39 @@ public class Client {
                         return this.restart();
                     }
 
+                    byte[] dataOfPacket = Arrays.copyOfRange(receivedRecipeBuffer, 8, receivedRecipeBuffer.length);
+                    String recipe = null;
+
                     if (receivedRecipeBuffer[1] == 8){
                         System.out.println("Client: The recipe you have requested by id was not found in the server of your friend most likely because you used a wrong ID ");
                     } else {
-                        byte[] dataOfPacket = Arrays.copyOfRange(receivedRecipeBuffer, 8, receivedRecipeBuffer.length);
 
-                        String recipe = new String(
-                                dataOfPacket, 0, helperMethods.indexOf(dataOfPacket, (byte) 0x0), StandardCharsets.UTF_8
-                        );
+                        if (receivedRecipeBuffer[2] > 1) {
+
+                            recipe = this.helperMethods.receiveMultiplePackets(clientSocket, receivingBuffer, incomingRecipePacket);
+
+                            if (recipe.equals("error")){
+                                return this.restart();
+                            }
+                            if (recipe.equals("continue")){
+                                continue;
+                            }
+
+                        } else {
+
+                            recipe = new String(
+                                    dataOfPacket, 0, helperMethods.indexOf(dataOfPacket, (byte) 0x0), StandardCharsets.UTF_8
+                            );
+
+                        }
 
                         System.out.println("Client: Id request for recipe successfully  done");
                         System.out.println("Client: The recipe you have requested:\n" + recipe);
+
                     }
 
                     return false;
+
                 } else {
                     System.out.println("Client: Checksum doesnt match");
                     continue;
