@@ -15,7 +15,7 @@ public class Recipes {
         }
     };
 
-    private static final String TruffleChickenAndPotatoGratin = "Ingredients\n" +
+    private static final String truffleChickenAndPotatoGratin = "Ingredients\n" +
             "2 chicken legs , skin on\n" +
             "1 tbsp salted butter , softened, plus a little extra, melted\n" +
             "1 small black truffle from a jar, sliced into very thin discs (use a mandoline if you have one) or a jar of truffle & porcini paste\n" +
@@ -112,7 +112,7 @@ public class Recipes {
             "STEP 4\n" +
             "Carefully pour away most of the fat from the potatoes. If your roasting tin is flameproof, finish browning the potatoes on top of the stove; if not, place the potatoes back in the oven until crisp and golden brown. Stir the parsley and the chopped garlic through the potatoes just before serving. Carve the goose at the table and serve with the potatoes. ";
 
-    private static final String LambChopsWithChilliAndLigurianBroadBeanPesto = "Ingredients\n" +
+    private static final String lambChopsWithChilliAndLigurianBroadBeanPesto = "Ingredients\n" +
             "12 lamb cutlets, the bones well scraped so they’re neat (you can ask your butcher to do this for you)\n" +
             "3 tbsp olive oil\n" +
             "½ lemon , juiced, plus wedges to serve\n" +
@@ -144,11 +144,11 @@ public class Recipes {
 
     private static final HashMap<String, String> idToRecipeContent = new HashMap<String, String>(){
         {
-            put("0", TruffleChickenAndPotatoGratin);
+            put("0", truffleChickenAndPotatoGratin);
             put("1", nextLevelPaella);
             put("2", stringSalmonSpinachWithTartareCream);
             put("3", honeyGlazedSpicedRoastGooseAndConfitPotatoes);
-            put("4", LambChopsWithChilliAndLigurianBroadBeanPesto);
+            put("4", lambChopsWithChilliAndLigurianBroadBeanPesto);
         }
     };
 
@@ -160,7 +160,7 @@ public class Recipes {
             String key = entry.getKey();
             String value = entry.getValue();
 
-            if (value.contains(recipeName)) {
+            if (value.toLowerCase().contains(recipeName.toLowerCase())) {
                 sb = sb.append(key);
                 sb = sb.append(":");
                 sb = sb.append(value);

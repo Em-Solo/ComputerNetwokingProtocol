@@ -355,13 +355,6 @@ public class HelperMethods {
                 //calculating checksum
                 partPacketBuffer[4] = this.checksum(partPacketBuffer).byteValue();
 
-                String t = "";
-
-                for (byte b  : partPacketBuffer) {
-                    t += "," + b;
-                }
-
-                System.out.println(t);
 
 
                 DatagramPacket sendPacket = new DatagramPacket(

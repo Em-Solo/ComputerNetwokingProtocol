@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2292f57b-9324-450e-8b98-e0609041f4f9" name="Changes" comment="works perfectly but has no packet splitting or receiving splitted packets">
+    <list default="true" id="2292f57b-9324-450e-8b98-e0609041f4f9" name="Changes" comment="Done everything works, packet splitting and receiving split packets added and works">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Protocol/src/RecipeExchange/HelperMethods.java" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/HelperMethods.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Recipes.java" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Recipes.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -113,7 +113,7 @@
       <workItem from="1651407560427" duration="22581000" />
       <workItem from="1651486249719" duration="24234000" />
       <workItem from="1651580224447" duration="9120000" />
-      <workItem from="1651591316275" duration="1849000" />
+      <workItem from="1651591316275" duration="4058000" />
     </task>
     <task id="LOCAL-00001" summary="did client doing server">
       <created>1650566004806</created>
@@ -213,7 +213,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651341461630</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Done everything works, packet splitting and receiving split packets added and works">
+      <created>1651596613232</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1651596613232</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -244,6 +251,7 @@
     <MESSAGE value="Starting up main part of protocol" />
     <MESSAGE value="Finished Client and recipe class. Client without packet division" />
     <MESSAGE value="works perfectly but has no packet splitting or receiving splitted packets" />
-    <option name="LAST_COMMIT_MESSAGE" value="works perfectly but has no packet splitting or receiving splitted packets" />
+    <MESSAGE value="Done everything works, packet splitting and receiving split packets added and works" />
+    <option name="LAST_COMMIT_MESSAGE" value="Done everything works, packet splitting and receiving split packets added and works" />
   </component>
 </project>

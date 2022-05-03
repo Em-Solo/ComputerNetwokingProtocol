@@ -74,11 +74,6 @@ public class Server {
                         continue;
                     }
 
-                    System.out.println(incomingPacket.getAddress().toString());
-                    if (this.clientAddress != null)
-                        System.out.println(this.clientAddress.toString());
-                    System.out.println(connected);
-
                     if (!incomingPacket.getAddress().equals(this.clientAddress)) {
                         if (!connected && receivedBufferFromClient[1] == 1) {
                             connected = true;
