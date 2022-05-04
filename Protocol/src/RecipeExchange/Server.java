@@ -92,18 +92,27 @@ public class Server {
 
                     switch (packetType) {
                         case 0:
+                            System.out.println("random aknoladgment received");
                             break;
                         case 1:
+                            System.out.println("starting hello preccess");
                             this.helloResponseMessage(receivedBufferFromClient);
+                            System.out.println("exiting hello phase");
                             break;
                         case 2:
+                            System.out.println("entering sending recipe from id");
                             this.recipeResponseFromId(receivedBufferFromClient);
+                            System.out.println("recipe from id was sent");
                             break;
                         case 3:
+                            System.out.println("Entering sending list of recipes");
                             this.listOfRecipesResponse(receivedBufferFromClient);
+                            System.out.println("list of recipes sent");
                             break;
                         case 6:
+                            System.out.println("entering goodbye phase");
                             this.goodbye(receivedBufferFromClient);
+                            System.out.println("leaving goodbye phase");
                             break;
                         default:
                             helperMethods.errorPacketSend(serverSocket, incomingPacket);
@@ -234,6 +243,17 @@ public class Server {
             if (recipeString == null) {
 
                 recipeFromIdBuffer = helperMethods.headerSetup(messageNumber.intValue(), 8, 1, 1);
+
+                //calculating and then setting the checksum in the buffer
+                recipeFromIdBuffer[4] = helperMethods.checksum(recipeFromIdBuffer).byteValue();
+
+                DatagramPacket sendPacket = new DatagramPacket(
+                        recipeFromIdBuffer,
+                        recipeFromIdBuffer.length,
+                        clientAddress,
+                        clientPort
+                );
+                serverSocket.send(sendPacket);
 
                 System.out.println("Server: The recipe requested by Id was not found, so a Not Found package was send");
 

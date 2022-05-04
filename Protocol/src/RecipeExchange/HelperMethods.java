@@ -338,6 +338,8 @@ public class HelperMethods {
 
         }
 
+        System.out.println("before part counter");
+
         int partCounter = 1;
 
         boolean old = false;
@@ -367,6 +369,7 @@ public class HelperMethods {
 
                 if (!old) {
                     socket.send(sendPacket);
+                    System.out.println("sending packet works");
                 }
 
 
@@ -381,7 +384,9 @@ public class HelperMethods {
                 );
 
                 try {
+                    System.out.println("receiving packet");
                     socket.receive(incomingAckPacket);
+                    System.out.println("packet received");
                 } catch (SocketTimeoutException e) {
                     System.out.println("Sending part packets: Timeout, ACK packet was not received after timeout time passed, receiving ack");
                     this.errorPacketSend(socket, incomingAckPacket);
@@ -390,17 +395,24 @@ public class HelperMethods {
 
 
                 if (this.checkChecksum(incomingAckPacket.getData())) {
-                    System.out.println("Sending part packets: Checksum matched");
+                    System.out.println("Sending part packets: Checksum matched for ack packet: " + partCounter);
+
+                    System.out.println("incoming packet number " + incomingAckPacket.getData()[3]);
+                    System.out.println("part counter number " + partCounter);
 
                     if (incomingAckPacket.getData()[3] == partCounter) {
                         partCounter++;
                         old = false;
+                        System.out.println("packet and partCounter matched");
                     } else {
+                        System.out.println("packet and partCounter didnt matched");
                         old = true;
                     }
 
+                    System.out.println(old);
+
                 } else {
-                    System.out.println("Sending part packets: Checksum doesnt match");
+                    System.out.println("Sending part packets: Checksum doesnt match for Ack : " + partCounter);
                     this.errorPacketSend(socket,incomingAckPacket);
                     return false;
                 }

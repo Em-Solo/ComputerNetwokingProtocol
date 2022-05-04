@@ -108,11 +108,6 @@ public class Entity {
         entity.startClient(ip, clientPort);
         entity.startServer(serverPort);
 
-//        try {
-//            reader.close();
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
 
     }
 
