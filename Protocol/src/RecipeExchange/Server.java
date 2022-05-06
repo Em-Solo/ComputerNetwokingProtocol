@@ -10,7 +10,7 @@ public class Server {
     private int serverPort = 42069;
     private DatagramSocket serverSocket = null;
 
-    private final int receivingBufferSize = 1000;
+    private final int receivingBufferSize = 256;
     byte[] receivingBuffer = new byte[receivingBufferSize];
 
     private HelperMethods helperMethods = null;
@@ -92,27 +92,26 @@ public class Server {
 
                     switch (packetType) {
                         case 0:
-                            System.out.println("random aknoladgment received");
                             break;
                         case 1:
-                            System.out.println("starting hello preccess");
+                            System.out.println("Server: Starting Hello Procedure");
                             this.helloResponseMessage(receivedBufferFromClient);
-                            System.out.println("exiting hello phase");
+                            System.out.println("Server: Hello Procedure successfully done");
                             break;
                         case 2:
-                            System.out.println("entering sending recipe from id");
+                            System.out.println("Server: Starting sending recipe from id procedure");
                             this.recipeResponseFromId(receivedBufferFromClient);
-                            System.out.println("recipe from id was sent");
+                            System.out.println("Server: Sending recipe from id procedure successfully done");
                             break;
                         case 3:
-                            System.out.println("Entering sending list of recipes");
+                            System.out.println("Server: Starting sending list of recipe procedure");
                             this.listOfRecipesResponse(receivedBufferFromClient);
-                            System.out.println("list of recipes sent");
+                            System.out.println("Server: Sending list of recipes procedure successfully done");
                             break;
                         case 6:
-                            System.out.println("entering goodbye phase");
+                            System.out.println("Server: Starting goodbye phase");
                             this.goodbye(receivedBufferFromClient);
-                            System.out.println("leaving goodbye phase");
+                            System.out.println("Server: Goodbye phase successfully done");
                             break;
                         default:
                             helperMethods.errorPacketSend(serverSocket, incomingPacket);
@@ -220,7 +219,7 @@ public class Server {
 
         }
 
-        System.out.println("Server: List of recipes containing the string the client send to the server, has been sent back to the client, will be empty if no such recipes exist");
+        System.out.println("Server: List of recipes containing the string the client send to the server has been sent back to the client\nIt will be empty if no such recipes exist");
 
     }
 
@@ -303,7 +302,7 @@ public class Server {
 
     private void goodbye(byte[] goodbyeBufferClient) {
 
-        System.out.println("Server: The server recieved a goodbye from the client so it will try to send one back and the server will be reset");
+        System.out.println("Server: The server received a goodbye from the client so it will try to send one back and the server will be reset");
 
         try{
             Byte messageNumber = goodbyeBufferClient[0];

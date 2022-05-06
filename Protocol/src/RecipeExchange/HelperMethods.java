@@ -212,7 +212,7 @@ public class HelperMethods {
                     try {
                         socket.receive(incomingPartPacket);
                     } catch (SocketTimeoutException e) {
-                        System.out.println("Packet Part Receiving: Timeout, packet was not received after timeout time passed, receiving parts");
+                        System.out.println("Receiving Packet Parts: Timeout, packet was not received after timeout time passed, receiving parts");
 
                         sent = false;
                         for (int j = 1; i<=5; i++) {
@@ -234,10 +234,10 @@ public class HelperMethods {
                     byte[] receivedPartBuffer = incomingPartPacket.getData();
 
                     if (this.checkChecksum(receivedPartBuffer)) {
-                        System.out.println("Packet Part Receiving: Checksum matched");
+                        System.out.println("Receiving Packet Parts: Checksum matched");
 
                         if (receivedPartBuffer[1] == 7) {
-                            System.out.println("Packet Part Receiving: Received error packet from server, receiving parts, restarting");
+                            System.out.println("Receiving Packet Parts: Received error packet from sender, receiving parts, restarting");
                             return "error";
                         }
 
@@ -250,7 +250,7 @@ public class HelperMethods {
 
                         sb.append(partOfData);
 
-                        System.out.println("Packet Part Receiving: Part: " + counter + "received from server");
+                        System.out.println("Receiving Packet Parts: Part: " + counter + " received from Sender");
 
                         counter++;
 
@@ -269,7 +269,7 @@ public class HelperMethods {
                         break;
 
                     } else {
-                        System.out.println("Packet Part Receiving: Checksum doesnt match");
+                        System.out.println("Receiving Packet Parts: Checksum doesnt match");
 
                         sent = false;
                         for (i = 1; i<=5; i++) {
@@ -288,7 +288,7 @@ public class HelperMethods {
 
 
                 } catch (IOException e) {
-                    System.err.println("Packet Part Receiving: Communication error with server at part receiving, either on send or receive");
+                    System.err.println("Packet Part Receiving: Communication error with sender at part receiving, either on send or receive");
                     e.printStackTrace();
 
                     sent = false;
@@ -338,7 +338,6 @@ public class HelperMethods {
 
         }
 
-        System.out.println("before part counter");
 
         int partCounter = 1;
 
@@ -369,7 +368,6 @@ public class HelperMethods {
 
                 if (!old) {
                     socket.send(sendPacket);
-                    System.out.println("sending packet works");
                 }
 
 
@@ -384,9 +382,7 @@ public class HelperMethods {
                 );
 
                 try {
-                    System.out.println("receiving packet");
                     socket.receive(incomingAckPacket);
-                    System.out.println("packet received");
                 } catch (SocketTimeoutException e) {
                     System.out.println("Sending part packets: Timeout, ACK packet was not received after timeout time passed, receiving ack");
                     this.errorPacketSend(socket, incomingAckPacket);
@@ -397,19 +393,15 @@ public class HelperMethods {
                 if (this.checkChecksum(incomingAckPacket.getData())) {
                     System.out.println("Sending part packets: Checksum matched for ack packet: " + partCounter);
 
-                    System.out.println("incoming packet number " + incomingAckPacket.getData()[3]);
-                    System.out.println("part counter number " + partCounter);
 
                     if (incomingAckPacket.getData()[3] == partCounter) {
+                        System.out.println("Sending part packets: ACK " + partCounter + " received, proceeding to send the next part");
                         partCounter++;
                         old = false;
-                        System.out.println("packet and partCounter matched");
                     } else {
-                        System.out.println("packet and partCounter didnt matched");
                         old = true;
                     }
 
-                    System.out.println(old);
 
                 } else {
                     System.out.println("Sending part packets: Checksum doesnt match for Ack : " + partCounter);

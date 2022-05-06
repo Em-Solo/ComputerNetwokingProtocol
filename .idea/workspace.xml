@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2292f57b-9324-450e-8b98-e0609041f4f9" name="Changes" comment="fixed some upper/lower case issues on requesting a recipe list">
+    <list default="true" id="2292f57b-9324-450e-8b98-e0609041f4f9" name="Changes" comment="fixed a minor bug with sending empty recipe buffer, and have alot of output strings for debugging">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Protocol/src/RecipeExchange/HelperMethods.java" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/HelperMethods.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol/src/RecipeExchange/Server.java" afterDir="false" />
     </list>
@@ -115,7 +115,12 @@
       <workItem from="1651580224447" duration="9120000" />
       <workItem from="1651591316275" duration="4379000" />
       <workItem from="1651670773335" duration="8046000" />
-      <workItem from="1651679906023" duration="1942000" />
+      <workItem from="1651679906023" duration="2220000" />
+      <workItem from="1651693861134" duration="219000" />
+      <workItem from="1651761139115" duration="1228000" />
+      <workItem from="1651842425458" duration="7513000" />
+      <workItem from="1651851735692" duration="4165000" />
+      <workItem from="1651857440597" duration="3755000" />
     </task>
     <task id="LOCAL-00001" summary="did client doing server">
       <created>1650566004806</created>
@@ -229,7 +234,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651598846815</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="fixed a minor bug with sending empty recipe buffer, and have alot of output strings for debugging">
+      <created>1651687206112</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1651687206112</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -262,6 +274,7 @@
     <MESSAGE value="works perfectly but has no packet splitting or receiving splitted packets" />
     <MESSAGE value="Done everything works, packet splitting and receiving split packets added and works" />
     <MESSAGE value="fixed some upper/lower case issues on requesting a recipe list" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed some upper/lower case issues on requesting a recipe list" />
+    <MESSAGE value="fixed a minor bug with sending empty recipe buffer, and have alot of output strings for debugging" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed a minor bug with sending empty recipe buffer, and have alot of output strings for debugging" />
   </component>
 </project>

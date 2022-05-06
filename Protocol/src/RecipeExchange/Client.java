@@ -17,7 +17,7 @@ public class Client {
 
     private DatagramSocket clientSocket = null;
 
-    private final int receivingBufferSize = 1000;
+    private final int receivingBufferSize = 256;
     private byte[] receivingBuffer = new byte[this.receivingBufferSize];
 
     private HelperMethods helperMethods = null;
@@ -118,6 +118,9 @@ public class Client {
     private boolean helloMessage(InetAddress targetServerAddress) {
         for(int i=1; i<=5; i++) {
             try {
+
+                System.out.println("Client: Starting hello procedure");
+
                 byte[] header = helperMethods.headerSetup(this.messageNumber, 1, 1, 1);
 
                 int buffSize = receivingBuffer.length;
@@ -188,7 +191,7 @@ public class Client {
 
     public boolean listRequest(InetAddress serverAddress) {
 
-        System.out.println("Give a name of a recipe you want:");
+        System.out.println("Client: Give a name that you want the recipe titles of the list you receive to contain\nor leave empty and press enter to request all the recipes:");
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String input = null;
